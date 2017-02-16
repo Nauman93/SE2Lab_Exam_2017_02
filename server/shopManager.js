@@ -261,7 +261,7 @@ var restockItem = function restockItem(item)
   * @param items the set of items to filter with the given criteria
  * @param itemYear the season of the item, use to filter the set of items
  */
-var searchItemYear = function searchItemSize(items,itemYear)
+var searchItemYear = function searchItemYear(items,itemYear)
 {
     var result = [];
     
@@ -281,14 +281,20 @@ var searchItemYear = function searchItemSize(items,itemYear)
 var discountItem = function discountItem(itemID,itemPrice)
 {
     //search for the element, take the first one if more than one match
-    var position = searchItemPos({ID : itemID, colour : itemColour, size : itemSize});
+    var position = searchItemYear({ID : itemID, year : itemYear});
 	
     //if is not found return null
 	if (position == null)
     	return null;
 	else
 	{
-		
+		if (warehouse[position].season == itemYear)
+        {
+            warehouse[position].price = warehouse[position].price * (item.discount/100);
+            return true;
+        }
+        else
+            return false;
 	}
 }
 //export functions

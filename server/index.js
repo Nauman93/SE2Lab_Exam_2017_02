@@ -298,12 +298,12 @@ app.post('/discountItem', function(request, response)
         
 	//itemSeason
         if ( typeof request.body.season !== 'undefined' && request.body.season)
-            itemSeason = request.body.season;
+            itemSeason = parseInt(request.body.season);
 		else 
 			itemSeason = null;
         //itemPrice
         if ( typeof request.body.price !== 'undefined' && request.body.price)
-            itemPrice = request.body.colour;
+            itemPrice = parseInt(request.body.price);
 		else 
 			itemPrice = null;
 	}
