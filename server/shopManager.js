@@ -256,7 +256,41 @@ var restockItem = function restockItem(item)
 }
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
+/*
+ * @brief This function search for an item, given the season
+  * @param items the set of items to filter with the given criteria
+ * @param itemYear the season of the item, use to filter the set of items
+ */
+var searchItemYear = function searchItemSize(items,itemYear)
+{
+    var result = [];
+    
+    for (i=0; i < items.length; i++)
+	{
+		if (items[i].season == itemYear)
+		{
+			result.push(items[i]);
+		}
+    }
+    
+    //returns the array with the elments that match the criteria
+    return result;
+    
+}
 
+var discountItem = function discountItem(itemID,itemPrice)
+{
+    //search for the element, take the first one if more than one match
+    var position = searchItemPos({ID : itemID, colour : itemColour, size : itemSize});
+	
+    //if is not found return null
+	if (position == null)
+    	return null;
+	else
+	{
+		
+	}
+}
 //export functions
 exports.getWarehouse = getWarehouse; 
 exports.searchItems = searchItems; 
