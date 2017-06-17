@@ -64,17 +64,17 @@ paths:
         - name: ID
           in: formData
           description: ID of the item
-          required: true
+          required: false
           type: string
         - name: size
           in: formData
           description: size of the item
-          required: true
+          required: false
           type: string
         - name: colour
           in: formData
           description: colour of the item
-          required: true
+          required: false
           type: string
       responses:
         200:
@@ -90,59 +90,6 @@ paths:
         404:
           description: no items found with specified criteria
             
-  /restockItem:
-    post:
-      summary: restock an item
-      description: it adds the item to the warehouse, increasing the quantity in warehouse or adding a new item
-      parameters:
-        - name: ID
-           in: formData
-           description: ID of the item
-           required: true
-           type: string
-         - name: size
-           in: formData
-           description: size of the item
-           required: true
-           type: string
-         - name: type
-           in: formData
-           description: type of the item
-           required: true
-           type: string
-         - name: quantity
-           in: formData
-           description: quantity of the item
-           required: true
-           type: string
-         - name: season
-           in: formData
-           description: year of the item
-           required: true
-           type: string
-         - name: price
-           in: formData
-           description: price of the item
-           required: true
-           type: string
-         - name: colour
-           in: formData
-           description: colour of the item
-           required: true
-           type: string
-      responses:
-        200:
-          description: object of the added item
-          schema: 
-              $ref: "#/definitions/item"
-        406:
-          description: ID of error
-          schema: 
-            properties:
-              error:
-                type: integer
-        404:
-          description: too many items
   /sales:
     post:
       summary: returns items on sale and update the databse with new prices
@@ -166,6 +113,54 @@ paths:
             items:
               $ref: "#/definitions/item"
 
+/restockItem:
+    post:
+      summary: restock an item
+      description: add the item to the warehouse, if the item quantity is higher than 10, it will return an error
+      parameters:
+        - name: ID
+          in: formData
+          description: ID of the item
+          required: true
+          type: string
+        - name: size
+          in: formData
+          description: size of the item
+          required: true
+          type: string
+        - name: type
+          in: formData
+          description: type of the item
+          required: true
+          type: string
+        - name: quantity
+          in: formData
+          description: quantity of the item
+          required: tre
+          type: integer
+        - name: season
+          in: formData
+          description: year of the item
+          required: true
+          type: integer
+        - name: colour
+          in: formData
+          description: colour of the item
+          required: true
+          type: string
+        - name: price
+          in: formData
+          description: price of the item
+          required: true
+          type: integer
+      responses:
+        200:
+          description: item restocked
+          schema: 
+              $ref: "#/definitions/item"
+        400:
+          description: something wrong
+          
 definitions:
   item:
     properties:
@@ -190,5 +185,3 @@ definitions:
       season:
         type: integer
         description: price of the pizza
-
-        
