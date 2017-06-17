@@ -256,6 +256,26 @@ var restockItem = function restockItem(item)
 }
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
+var sales = function(itemSeason, itemPrice) {
+
+    var iYear = parseInt(itemSeason);
+    var iDiscount = parseInt(itemPrice);
+
+    if (iYear < 0 || iDiscount > 100 || iDiscount < 0) {
+        return;
+    }
+    else {
+        var percentage = iDiscount / 100;
+        var modified = [];
+        for (var i=0; i < warehouse.length; i++) {
+            if (warehouse[i].season == iYear) {
+                warehouse[i].price = warehouse[i].price - warehouse[i].price * percentage;
+                modified.push(warehouse[i]);
+            }
+        }
+        return modified;
+    }
+}
 
 //export functions
 exports.getWarehouse = getWarehouse; 
