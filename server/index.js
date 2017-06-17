@@ -126,7 +126,7 @@ app.post('/sellItem', function(request, response)
 
 	var itemID;
     var itemSize;
-    var itemColour;
+    var itemColour
 	
 	//check body and parameters
 	if ( typeof request.body !== 'undefined' && request.body)
@@ -273,6 +273,8 @@ app.post('/restockItem', function(request, response)
 });
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
+
+
 /**
  * @brief updates price with discount
  * @return the modified items
@@ -287,38 +289,37 @@ app.post('/sales', function(request, response)
 	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
 	headers["Content-Type"] = "application/json";
 
-    var itemSeason;
-    var itemPrice;
+	var year;
+    var discount;
 	
 	//check body and parameters
 	if ( typeof request.body !== 'undefined' && request.body)
 	{
-        //itemSeason
-		if ( typeof request.body.season !== 'undefined' && request.body.season)
-			 itemSeason = parseInt(request.body.season);
+        //year
+		if ( typeof request.body.year !== 'undefined' && request.body.year)
+			 year = request.body.year;
 		else 
-			itemSeason = null;
+			year = null;
         
-        //itemPrice
-        if ( typeof request.body.price !== 'undefined' && request.body.price)
-            itemPrice = request.body.price;
+        //discount
+        if ( typeof request.body.discount !== 'undefined' && request.body.discount)
+            discount = request.body.discount;
 		else 
-			itemPrice = null;    
-	
+			discount = null;
+
 	}
 	else
 	{
-		itemSeason = null;
+		year = null;
 	}
     
 	
-    if (itemSeason!=null && itemPrice!=null)
+    if (year!=null && discount!=null)
 	{
 		//aceptable input
   			response.writeHead(200, headers);
-			response.end(JSON.stringify(shopManager.sales(itemSeason, itemPrice)));
-
-	} 
+			response.end(JSON.stringify(shopManager.sales(year, discount)));
+	}
 
 });
 

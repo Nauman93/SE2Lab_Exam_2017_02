@@ -1,77 +1,77 @@
 //The warehouse, i.e., the list of items stored in the shop
 var warehouse = [
     {
-		ID: 1,
+        ID: 1,
         type: "trausers",
-		size: "S",
+        size: "S",
         quantity: 2,
-		colour: "blue",
+        colour: "blue",
         price: 11,
         season: 2017
-	},
+    },
     {
-		ID: 1,
+        ID: 1,
         type: "trausers",
-		size: "S",
+        size: "S",
         quantity: 2,
-		colour: "grey",
+        colour: "grey",
         price: 15,
         season: 2017
-	},
+    },
     {
-		ID: 1,
+        ID: 1,
         type: "trausers",
-		size: "M",
+        size: "M",
         quantity: 3,
-		colour: "blue",
+        colour: "blue",
         price: 17,
         season: 2017
-	},
+    },
     {
-		ID: 2,
+        ID: 2,
         type: "trausers",
-		size: "M",
+        size: "M",
         quantity: 4,
-		colour: "grey",
+        colour: "grey",
         price: 10,
         season: 2016
-	},
+    },
     {
-		ID: 2,
+        ID: 2,
         type: "trausers",
-		size: "L",
+        size: "L",
         quantity: 1,
-		colour: "grey",
+        colour: "grey",
         price: 4,
         season: 2016
-	},
+    },
     {
-		ID: 3,
+        ID: 3,
         type: "sweatshirt",
-		size: "S",
+        size: "S",
         quantity: 3,
-		colour: "green",
+        colour: "green",
         price: 22,
         season: 2016
-	},
+    },
     {
-		ID: 3,
+        ID: 3,
         type: "sweatshirt",
-		size: "S",
+        size: "S",
         quantity: 3,
-		colour: "yellow",
+        colour: "yellow",
         price: 100,
         season: 2016
-	},
+    },
     {
-		ID: 3,
+        ID: 3,
         type: "sweatshirt",
-		size: "M",
+        size: "M",
         quantity: 1,
-		colour: "green",
+        colour: "green",
         price: 110,
         season: 2016
-	},
+    },
     
 ];
 
@@ -123,11 +123,11 @@ var searchItemID = function searchItemID(items,itemID)
     var result = [];
     
     for (i=0; i < items.length; i++)
-	{
-		if (items[i].ID == itemID)
-		{
-			result.push(items[i]);
-		}
+    {
+        if (items[i].ID == itemID)
+        {
+            result.push(items[i]);
+        }
     }
     
     //returns the array with the elments that match the criteria
@@ -145,11 +145,11 @@ var searchItemSize = function searchItemSize(items,itemSize)
     var result = [];
     
     for (i=0; i < items.length; i++)
-	{
-		if (items[i].size == itemSize)
-		{
-			result.push(items[i]);
-		}
+    {
+        if (items[i].size == itemSize)
+        {
+            result.push(items[i]);
+        }
     }
     
     //returns the array with the elments that match the criteria
@@ -167,11 +167,11 @@ var searchItemColour = function searchItemColour(items,itemColour)
     var result = [];
     
     for (i=0; i < items.length; i++)
-	{
-		if (items[i].colour == itemColour)
-		{
-			result.push(items[i]);
-		}
+    {
+        if (items[i].colour == itemColour)
+        {
+            result.push(items[i]);
+        }
     }
     
     //returns the array with the elments that match the criteria
@@ -186,14 +186,14 @@ var searchItemColour = function searchItemColour(items,itemColour)
 function searchItemPos(item)
 {
     for (i=0; i < warehouse.length; i++)
-	{
-		if (warehouse[i].ID == item.ID &&
+    {
+        if (warehouse[i].ID == item.ID &&
            warehouse[i].colour == item.colour &&
             warehouse[i].size == item.size 
            )
-		{
-			return i;
-		}
+        {
+            return i;
+        }
     }
     
     return null;
@@ -210,13 +210,13 @@ var sellItem = function sellItem(itemID,itemColour,itemSize)
 {
     //search for the element, take the first one if more than one match
     var position = searchItemPos({ID : itemID, colour : itemColour, size : itemSize});
-	
+    
     //if is not found return null
-	if (position == null)
-    	return null;
-	else
-	{
-		if (warehouse[position].quantity>1)
+    if (position == null)
+        return null;
+    else
+    {
+        if (warehouse[position].quantity>1)
         {
             //modify the stiorage quantity,and returns the item
             warehouse[position].quantity = warehouse[position].quantity-1;
@@ -225,7 +225,7 @@ var sellItem = function sellItem(itemID,itemColour,itemSize)
         else
             //remove the item and return it
             return warehouse.splice(position, 1)[0];
-	}
+    }
 }
 
 /**
@@ -237,12 +237,12 @@ var restockItem = function restockItem(item)
 {
     var position = searchItemPos(item);
     
-	if (position==null)
-	{
-		warehouse.push(item);
+    if (position==null)
+    {
+        warehouse.push(item);
         return true;
-	}
-	else
+    }
+    else
     {
         if (warehouse[position].quantity<10)
         {
@@ -256,18 +256,17 @@ var restockItem = function restockItem(item)
 }
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
-var sales = function sales(itemSeason, itemPrice) {
 
-    var iYear = parseInt(itemSeason);
-    var iDiscount = parseInt(itemPrice);
-
+var sales = function(year, discount) {
+    var iYear = parseInt(year);
+    var iDiscount = parseInt(discount);
     if (iYear < 0 || iDiscount > 100 || iDiscount < 0) {
         return;
     }
     else {
         var percentage = iDiscount / 100;
         var modified = [];
-        for (var i=0; i < warehouse.length; i++) {
+        for (var i=0; i< warehouse.length; i++) {
             if (warehouse[i].season == iYear) {
                 warehouse[i].price = warehouse[i].price - warehouse[i].price * percentage;
                 modified.push(warehouse[i]);
