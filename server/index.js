@@ -126,7 +126,7 @@ app.post('/sellItem', function(request, response)
 
 	var itemID;
     var itemSize;
-    var itemColour
+    var itemColour;
 	
 	//check body and parameters
 	if ( typeof request.body !== 'undefined' && request.body)
@@ -273,7 +273,11 @@ app.post('/restockItem', function(request, response)
 });
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
-app.post('/discountItem', function(request, response) 
+/**
+ * @brief updates price with discount
+ * @return the modified items
+ */
+app.post('/sales', function(request, response) 
 {
 	var headers = {};
 	headers["Access-Control-Allow-Origin"] = "*";
@@ -283,62 +287,38 @@ app.post('/discountItem', function(request, response)
 	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
 	headers["Content-Type"] = "application/json";
 
-	var itemID;
-    	var itemSeason;
-	var itemPrice;
-
+    var itemSeason;
+    var itemPrice;
+	
 	//check body and parameters
 	if ( typeof request.body !== 'undefined' && request.body)
 	{
-        //ItemId
-		if ( typeof request.body.ID !== 'undefined' && request.body.ID)
-			 itemID = parseFloat(request.body.ID);
-		else 
-			itemID = null;
-        
-	//itemSeason
-        if ( typeof request.body.season !== 'undefined' && request.body.season)
-            itemSeason = parseInt(request.body.season);
+        //itemSeason
+		if ( typeof request.body.season !== 'undefined' && request.body.season)
+			 itemSeason = parseInt(request.body.season);
 		else 
 			itemSeason = null;
+        
         //itemPrice
         if ( typeof request.body.price !== 'undefined' && request.body.price)
-            itemPrice = parseInt(request.body.price);
+            itemPrice = request.body.price;
 		else 
-			itemPrice = null;
+			itemPrice = null;    
+	
 	}
 	else
 	{
-		itemID = null;
+		itemSeason = null;
 	}
     
-	var itemDiscounted;
 	
-    if (itemID!=null && itemPrice!=null && itemQuantity!=null)
+    if (itemSeason!=null && itemPrice!=null)
 	{
 		//aceptable input
-		//delete sell an item
-		itemDiscounted = shopManager.discountItem(itemID,itemPrice);
-		if (itemDiscounted!= null)
-		{
-			response.writeHead(200, headers);
-			response.end(JSON.stringify(itemDiscounted));
-		}
-		else
-		{
-			response.writeHead(404, headers);
-			response.end(JSON.stringify());
-		}
+  			response.writeHead(200, headers);
+			response.end(JSON.stringify(shopManager.sales(itemSeason, itemPrice)));
 
-		}
-    		else    
-		{
-        	//unaceptable input
-        	response.writeHead(406, headers);
-			response.end(JSON.stringify("1"));
-		} 
-
-	}
+	} 
 
 });
 
