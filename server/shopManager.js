@@ -256,7 +256,7 @@ var restockItem = function restockItem(item)
 }
 
 //ADD YOUR CODE BELOW THIS COMMENT, IF IT IS POSSIBLE
-var sales = function(itemSeason, itemPrice) {
+var sales = function sales(itemSeason, itemPrice) {
 
     var iYear = parseInt(itemSeason);
     var iDiscount = parseInt(itemPrice);
